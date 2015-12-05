@@ -1,0 +1,57 @@
+The Procedure is as follows,
+
+Step 1: Edit the file common.h ,fill in the corresponding IPv4 address
+  	edit the line 
+	#define SERVER_IP "<your server IP here>"
+
+step 2: Compile the required executables by giving the following commands
+
+	#make adapter
+
+	#make x86_server	
+
+	if server runs on ARM kit then
+	#make arm_server
+
+	#make client
+
+step 3: Since Program uses a non standard port, we need to modify the firewall rules 
+	so either "Method 1" or "Method 2" should be good.
+	
+	Method 1:
+	in GNOME from the system drop down menu:
+		System -> Administration -> Security Level and Firewall
+		select tab  "Firewall options" -> "other ports"
+		then add port 55555 udp
+
+	Method 2: (Not a Safe Option) Disable the firewall
+		To stop the firewall for kernel 2.6
+		# /etc/init.d/iptables save
+		# /etc/init.d/iptables stop
+	
+		To start the firewall
+		# /etc/init.d/iptables start
+
+Step 4: Generation of .hct files for each remote(RC 6 mode 0)
+	use adapter executable to generate .hct files (hct files are look up table for a remote, 
+	each remote ill have its own hct file) 
+
+	#./adapter 
+	and foll the procedure give \stop to come out of the program
+
+Step 5: Copy the client program and hct files to any system on the network (see man scp)
+	and run the server on the machine with specified IP address
+
+	to login:
+		# ./client -i
+
+	to logout:
+		# ./client -o
+
+	to send requests to the server:
+		# ./client -d <device_name> -c <command> 
+		repetation factor is optional (NOTE: repetation fator takes input in HEX)
+
+	NOTE: If there is no activity on a client side, the server will automatically logout the 
+	      corresponding user after a time interval of MAX_TIMER (defined in server.c)
+	

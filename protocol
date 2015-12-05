@@ -1,0 +1,25 @@
+NOTE: 	1. ALL <format(no of bytes)> are in bytes (no of bytes greater than 1 specified)
+	2. Every thing in CAPS are macros from here on defined in common.h
+	3. ... indicates more bytes to follow
+	# used as escape sequence
+
+
+Messages from Client to server
+	login: 
+		<LOGIN_BYTE> <length of passwd> <password...>
+
+	logout:
+		<LOGOUT_BYTE>
+
+	command:
+		<COMMAND_BYTE> <remote mode> <repetation factor(2)> <device number (2)> <command number(2)>
+		
+	schedule:
+		<SCHEDULE_BYTE> <remote mode> <repetation factor(2)> <device number (2)> <command number(2)> # <exec time...> # <repete time interval...> #
+
+
+
+Messages from server to client
+	reply:
+		<RESPONSE BYTE>
+	for details on response Byte see common.h
